@@ -1,0 +1,120 @@
+﻿html {
+    scroll-behavior: smooth;
+  }
+body{
+    background-color: black;
+    color: white;
+}
+img{
+    max-width: 100%;
+}
+
+@font-face {
+    font-family: gothicFont;
+    src: url(../fonts/blkchcry.TTF);
+}
+body{
+    font-family: Serif;
+}
+/*
+.text-gothic{
+    font-family: gothicFont;
+}
+p{
+    font-family: Sans-Serif;
+}*/
+a{
+    font-family:  Sans-Serif;
+}
+.dv{
+    border: 2px dotted red;
+}
+.test{
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 20px;
+}
+.carousel-control-prev{
+    width: 30%;
+}
+.carousel-control-next{
+    width: 30%;
+}
+.icon_box{
+    height: 60px;
+    width: 60px;
+    margin: 20px 20px;
+}
+.header_box{
+    padding-top: 20vh;
+    height: 100vh;
+    width: 100vw;
+   background: url(../images/background_main.jpg) no-repeat center;
+   background-color: rgba(0, 0, 0, 0.4);
+   
+}
+.fullscale_gallery_img{
+    max-height: 100%;
+    max-width: 100%;
+}
+#fullscalegalleryimg{
+    background: black;
+    opacity: 0.95;
+    color: white;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    position: fixed;
+    top:0;
+    z-index: 2;
+}
+.fullscale_img_box{
+    height: 80vh;
+}
+.moon_border{
+    border: 4px solid gray;
+}
+
+.img_box{
+    width: 200px;
+    height: 200px;
+    padding: auto;
+    overflow: hidden;
+    margin: 5px 5px;
+    background: gray;
+}
+.img_tattoo_gallery{
+    max-width: 100%;
+    height: 90vh;
+}
+.img_moon_phase_thumbnail{
+    min-width: 200px;
+    min-height: 200px;;    
+}
+.text-white{
+    color: white;
+}
+.text-orange{
+    color: orange;
+}
+.padding_top_10{
+    padding-top: 10vh;
+}
+.margin_top_5{
+    margin-top: 5vh;
+}
+.margin_top_10{
+    margin-top: 10vh;
+}
+#Quotebar{
+    height: 20vh;
+    width: 100vw;
+}
+.vh-80{
+    height: 80vh;
+}
+.vh-90{
+    height:90vh;
+}
+.vh-100{
+    height: 100vh;
+}

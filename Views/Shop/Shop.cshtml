@@ -1,0 +1,18 @@
+@{
+    string LocalString = ViewBag.Example + " Good to see you!";
+}
+
+<h2>@LocalString</h2>
+
+<p>Welcome to the shop.</p>
+
+<h1> @ViewBag.Example </h1>
+
+@{
+                DateTime CurrentTime = DateTime.Now;
+                //For more custom DateTime strings in C#
+                //https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings
+                <p>@CurrentTime.ToString("MMMM dd, yyyy g / h:m:s tt")</p>
+            }
+
+

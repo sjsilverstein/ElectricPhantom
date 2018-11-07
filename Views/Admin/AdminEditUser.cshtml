@@ -1,6 +1,16 @@
-<div class="text-center">
-Admin EditUser Page!!!
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h3>Admin Edit User</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center">
+            <p><a href="~/ListUsers">Return to User Dashboard</a></p>
+        </div>
+    </div>
 </div>
+
 
 
 <table class="table margin_top_5">
@@ -9,15 +19,20 @@ Admin EditUser Page!!!
         <th>Last Name</th>
         <th>Email</th>
         <th>User Level</th>
+        <th>Created At</th>
+        <th>Updated At</th>
     </tr>
     <tr>
         <td>@ViewBag.EditUser.FirstName</td>
         <td>@ViewBag.EditUser.LastName</td>
         <td>@ViewBag.EditUser.Email</td>
         <td>@ViewBag.EditUser.UserLevel</td>
+        <td>@ViewBag.EditUser.CreatedAt</td>
+        <td>@ViewBag.EditUser.UpdatedAt</td>
     </tr>
 </table>
 <div class="container">
+
     <div class="row">
         <form id="AdminEditUserLevelForm"class="margin_top_5" asp-action="AdminSetUserLevel" asp-controller="Admin" method="POST">
             <input type="hidden" name="userId" value="@ViewBag.EditUser.UserId"/>

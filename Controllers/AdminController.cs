@@ -97,5 +97,42 @@ namespace ElectricPhantom.Controllers
             return RedirectToAction("AdminEdit", new{ editUser.UserId } );
         }
 
+        [HttpGet]
+        [Route("CatalogAdmin")]
+        public IActionResult CatalogAdmin(){
+             // Check if the user is logged into the system if not redirect them to the login page.
+            int? uId = HttpContext.Session.GetInt32("UserId");
+            if(uId == null){
+                return RedirectToAction("Index", "Login");
+            }
+            //Check if loggin in user is a SuperAdmin UserLevel == 9
+            //If not log them out.
+            User loggedUser = _context.Users.SingleOrDefault(u => u.UserId == uId);            
+            if(loggedUser.UserLevel != 9){
+                return RedirectToAction("Logoff", "Login");
+            }
+
+            //Query for All Catagories
+            List<Catagory> catagoryList = _context.Catagories.ToList();
+            ViewBag.catagories = catagoryList;
+            
+            return View("CatalogAmin");
+        }
+        
+        [HttpPost]
+        [Route("CreateCatagory")]
+        public IActionResult CreateCatagory(CatagoryViewModel newCatagory){
+            if(ModelState.IsValid){
+                
+                Catagory addCatagory = new Catagory{
+                    CatagoryName = newCatagory.CatagoryName
+                };
+
+                _context.Add(addCatagory);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("CatalogAdmin", "Admin");
+        }
+
     }
 }

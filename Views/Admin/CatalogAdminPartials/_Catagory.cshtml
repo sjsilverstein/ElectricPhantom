@@ -1,0 +1,37 @@
+@model ElectricPhantom.Models.CatagoryViewModel
+
+<div class="row">
+    <h5>Catagories</h5>
+</div>
+<div class="row dv">
+    <div class="col-6">
+        <div class="row">
+            <p>Availible Catagories: </p>
+        </div>
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-11">
+                <select>
+                    @{
+                        foreach(var catagory in ViewBag.catagories){
+                            <option>@catagory.CatagoryName</option>
+                        }
+                    }
+                </select>
+            </div> 
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="row">
+            <div class="col-12 text-center">
+                <p>Create a new Catagory for items in the Catalog</p>
+            </div>
+        </div>
+        <form asp-action="CreateCatagory" asp-controller="Admin" method="POST">
+                    <span asp-validation-for="CatagoryName"></span>
+                    <label asp-for="CatagoryName">Catagory Name:</label>
+                    <input asp-for="CatagoryName">
+                    <input type="submit" value="Create New Catagory">
+        </form>
+    </div>
+</div>

@@ -31,7 +31,7 @@ namespace ElectricPhantom.Controllers
             HttpContext.Session.Clear();
 
             if(ModelState.IsValid){
-
+                //Check email is not in use.
                 User emailChecker = _context.Users.SingleOrDefault(u => u.Email == newUser.Email);
 
                 if(emailChecker != null){
@@ -69,7 +69,8 @@ namespace ElectricPhantom.Controllers
                 HttpContext.Session.SetInt32("UserId", (int)thisUser[0].UserId);
 
                 //Direct new User to ListUsers
-                return RedirectToAction("ListUsers", "Login");
+
+                return RedirectToAction("Shop", "Shop");
             }
 
             return RedirectToAction("Index", "Login");

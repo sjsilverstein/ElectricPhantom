@@ -1,0 +1,38 @@
+<div class="text-center">
+Admin EditUser Page!!!
+</div>
+
+
+<table class="table margin_top_5">
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>User Level</th>
+    </tr>
+    <tr>
+        <td>@ViewBag.EditUser.FirstName</td>
+        <td>@ViewBag.EditUser.LastName</td>
+        <td>@ViewBag.EditUser.Email</td>
+        <td>@ViewBag.EditUser.UserLevel</td>
+    </tr>
+</table>
+<div class="container">
+    <div class="row">
+        <form id="AdminEditUserLevelForm"class="margin_top_5" asp-action="AdminSetUserLevel" asp-controller="Admin" method="POST">
+            <input type="hidden" name="userId" value="@ViewBag.EditUser.UserId"/>
+            <label form="AdminEditUserLevelForm" for="newUserLevel">Set New User Level: </label>
+            <select type="number" name="newUserLevel">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+            </select>
+            <button type="submit">Set New User Level</button>
+        </form>
+    </div>
+</div>

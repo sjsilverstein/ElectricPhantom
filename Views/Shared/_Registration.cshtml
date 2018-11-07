@@ -1,7 +1,64 @@
 @model ElectricPhantom.Models.RegistrationViewModel
 <div class="row">
-    <h2>Register New User</h2>
-</div>
-<form action="RegisterUser" method="POST">
+    <div class="col-12 text-center">
+        <h2>Register New User</h2>
+    </div>
     
+</div>
+<form class="margin_top_5" asp-action="RegisterUser" asp-controller="Login" method="POST">
+    <div class="row">
+        <div class="col-6">
+            <span asp-validation-for="Email"></span>
+            <label asp-for="Email">Email:</label>
+        </div>
+        <div class="col-6">
+            <input asp-for="Email">
+        </div>
+    </div>
+ 
+    <div class="row">
+        <div class="col-6">
+            <span asp-validation-for="FirstName"></span>
+            <label asp-for="FirstName">First Name:</label>
+        </div>
+        <div class="col-6">
+            <input asp-for="FirstName">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <span asp-validation-for="LastName"></span>
+            <label asp-for="LastName">Last Name:</label>
+        </div>
+        <div class="col-6">
+            <input asp-for="LastName">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <span asp-validation-for="Password"></span>
+            <label asp-for="Password">Password:</label>
+        </div>
+        <div class="col-6">
+            <input asp-for="Password">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <span asp-validation-for="PasswordConfirmation"></span>
+            <label asp-for="PasswordConfirmation">Password Confirmation:</label>
+        </div>
+        <div class="col-6">
+            <input asp-for="PasswordConfirmation" type="password">
+        </div>
+    </div>
+  
+    <div class="row">
+        <div class="col-12">
+            <input type="submit" value="Register">
+        </div>
+    </div>
 </form>

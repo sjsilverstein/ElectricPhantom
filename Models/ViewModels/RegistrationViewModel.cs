@@ -1,12 +1,12 @@
 using System.ComponentModel.DataAnnotations;
-
-
+using Validations;
 
 namespace ElectricPhantom.Models {
     public class RegistrationViewModel {
  
         [Required]
         [EmailAddress]
+        [IsUniqueEmail]
         public string Email { get; set; }     
  
         [Required]

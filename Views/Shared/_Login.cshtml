@@ -1,23 +1,29 @@
+@model ElectricPhantom.Models.LoginViewModel
 <div class="row">
-    <h2>Login</h2>
+    <div class="col-12 text-center">
+        <h2>Login</h2>
+    </div>
+    
 </div>
-<form action="Login" method="POST">
+<form class="margin_top_5" asp-action="Login" asp-controller="Login"method="POST">
     <div class="row">
         <div class="col-6">
-            <label for="Email">User Email:</label>
+            <label asp-for="Email">User Email:</label>
         </div>
         <div class="col-6">
-            <input type="text" name="Email">
+            <input asp-for="Email" type="text">
         </div>
     </div>
+
     <div class="row">
         <div class="col-6">
-            <label for="Password">Password:</label>
+            <label asp-for="Password">Password:</label>
         </div>
         <div class="col-6">
-            <input type="password" name="Password">
+            <input asp-for="Password" type="password">
         </div>
     </div>
+
     <div class="row">
         <div class="col-12">
             <input type="submit" name="submit" value="Login">

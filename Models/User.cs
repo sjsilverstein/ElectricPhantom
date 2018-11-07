@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ElectricPhantom.Models;
+
 namespace ElectricPhantom.Models
 {
     public  class User: BaseEntity {

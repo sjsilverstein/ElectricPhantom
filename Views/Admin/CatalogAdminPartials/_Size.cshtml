@@ -1,3 +1,37 @@
+@model ElectricPhantom.Models.SizeViewModel
+
 <div class="row">
     <h5>Availible Sizes</h5>
+</div>
+<div class="row dv">
+    <div class="col-6">
+        <div class="row">
+            <p>Availible Sizes: </p>
+        </div>
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-11">
+                <select>
+                    @{
+                        foreach(var size in ViewBag.sizes){
+                            <option>@size.SizeName</option>
+                        }
+                    }
+                </select>
+            </div> 
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="row">
+            <div class="col-12 text-center">
+                <p>Make a new Size avaible for items in the Catalog</p>
+            </div>
+        </div>
+        <form asp-action="CreateSize" asp-controller="Admin" method="POST">
+                    <span asp-validation-for="SizeName"></span>
+                    <label asp-for="SizeName">Size Name:</label>
+                    <input asp-for="SizeName">
+                    <input type="submit" value="Create New Size">
+        </form>
+    </div>
 </div>

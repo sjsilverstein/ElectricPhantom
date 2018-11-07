@@ -11,6 +11,8 @@ namespace ElectricPhantom.Models
         public int CatagoryId { get; set; }
 
         public string CatagoryName { get; set; }
+
+        List<Item> Items { get; set; }
     }
     
 }

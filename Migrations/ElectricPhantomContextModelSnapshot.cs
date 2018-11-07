@@ -56,6 +56,8 @@ namespace ElectricPhantom.Migrations
 
                     b.HasKey("ItemId");
 
+                    b.HasIndex("CatagoryId");
+
                     b.ToTable("Items");
                 });
 
@@ -195,6 +197,14 @@ namespace ElectricPhantom.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("ElectricPhantom.Models.Item", b =>
+                {
+                    b.HasOne("ElectricPhantom.Models.Catagory", "ItemCatagory")
+                        .WithMany()
+                        .HasForeignKey("CatagoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ElectricPhantom.Models.Order", b =>

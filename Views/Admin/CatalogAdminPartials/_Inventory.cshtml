@@ -1,0 +1,86 @@
+@model ElectricPhantom.Models.InventoryViewModel
+
+<div class="row">
+    <h5>Inventory</h5>
+</div>
+<div class="row dv">
+    <div class="col-6">
+        <div class="row">
+            <p>Current Inventory</p>
+        </div>
+        <div class="row">
+            <table class="table">
+                <tr>
+                    <th>Style Name</th>
+                    <th>Size</th>
+                    <th>Units</th>
+                    <th>Price</th>
+                    <th>Catagory</th>
+                </tr>
+                @{
+                    foreach(var unit in ViewBag.inventory){
+                        <tr>
+                            <td>@unit.Item.ItemName</td>
+                            <td>@unit.SizeId</td>
+                            <td>@unit.Inventory</td>
+                            <td>@unit.Item.Price</td>
+                            <td>@unit.Item.ItemCatagory.CatagoryName</td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="row">
+            <div class="col-12 text-center">
+                <p>Create New Inventory</p>
+            </div>
+        </div>
+        <form asp-action="CreateInventory" asp-controller="Admin" method="POST">
+            <div class="row">
+                <div class="col-6">
+                    <span asp-validation-for="Inventory"></span>
+                    <label asp-for="Inventory">Initial Inventory of Units:</label>
+                </div>
+                <div class="col-6">
+                    <input asp-for="Inventory" type="number"> 
+                </div>   
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <span asp-validation-for="ItemId"></span>
+                    <label asp-for="ItemId">Item:</label>
+                </div>
+                <div class="col-6">
+                    <select asp-for="ItemId">
+                        @{
+                            foreach(var item in ViewBag.itemList){
+                                <option value="@item.ItemId">@item.ItemName</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <span asp-validation-for="SizeId"></span>
+                    <label asp-for="SizeId">Size:</label>
+                </div>
+                <div class="col-6">
+                    <select asp-for="SizeId">
+                        @{
+                            foreach(var size in ViewBag.sizes){
+                                <option value="@size.SizeId">@size.SizeName</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6"></div>
+                <input type="submit" value="Create New Inventory">
+            </div> 
+        </form>
+    </div>
+</div>

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElectricPhantom.Migrations
 {
     [DbContext(typeof(ElectricPhantomContext))]
-    [Migration("20181107055847_FirstMigration")]
+    [Migration("20181107175029_FirstMigration")]
     partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,6 +57,8 @@ namespace ElectricPhantom.Migrations
                         .ValueGeneratedOnAddOrUpdate();
 
                     b.HasKey("ItemId");
+
+                    b.HasIndex("CatagoryId");
 
                     b.ToTable("Items");
                 });
@@ -197,6 +199,14 @@ namespace ElectricPhantom.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("ElectricPhantom.Models.Item", b =>
+                {
+                    b.HasOne("ElectricPhantom.Models.Catagory", "ItemCatagory")
+                        .WithMany()
+                        .HasForeignKey("CatagoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ElectricPhantom.Models.Order", b =>

@@ -1,0 +1,83 @@
+@model ElectricPhantom.Models.ItemViewModel
+
+<div class="row">
+    <h5>Availible Styles</h5>
+</div>
+
+<div class="row dv">
+    <div class="col-6">
+        <table class="table">
+            <tr>
+                <th>Style Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Catagory</th>
+            </tr>
+            @{
+                foreach(var item in ViewBag.itemList){
+                    <tr>
+                        <td>@item.ItemName</td>
+                        <td>@item.Description</td>
+                        <td>@item.Price</td>
+                        <td>@item.ItemCatagory.CatagoryName</td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+    <div class="col-6">
+        <div class="row">
+            <div class="col-12 text-center">
+                <p>Create a new Style for the Catalog</p>
+            </div>
+        </div>
+        <form asp-action="CreateItem" asp-controller="Admin" method="POST">
+            <div class="row">
+                <div class="col-6">
+                    <span asp-validation-for="ItemName"></span>
+                    <label asp-for="ItemName">Style Name:</label>
+                </div>
+                <div class="col-6">
+                    <input asp-for="ItemName"> 
+                </div>   
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <span asp-validation-for="Description"></span>
+                    <label asp-for="Description">Description:</label>  
+                </div>
+                <div class="col-6">
+                    <input asp-for="Description">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <span asp-validation-for="Price"></span>
+                    <label asp-for="Price">Price:</label>
+                </div>
+                <div class="col-6">
+                    <input asp-for="Price">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <span asp-validation-for="CatagoryId"></span>
+                    <label asp-for="CatagoryId">Catagory:</label>
+                </div>
+                <div class="col-6">
+                    <select asp-for="CatagoryId">
+                        @{
+                            foreach(var catagory in ViewBag.catagories){
+                                <option value="@catagory.CatagoryId">@catagory.CatagoryName</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6"></div>
+                <input type="submit" value="Create New Style">
+            </div> 
+        </form>
+    </div>
+</div>

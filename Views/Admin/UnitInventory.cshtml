@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="row">
+        <div class="col-11 text-center">
+            <h5>Unit Inventory #@ViewBag.EditUnit.UnitId</h5>
+
+        </div>
+        <div class="col-1">
+            <a href="~/CatalogAdmin">Return (Catalog Admin)</a>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table">
+            <tr>
+                <th>Style Name</th>
+                <th>Size</th>
+                <th>Price</th>
+                <th>Catagory</th>
+                <th>Inventory Count</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <td>@ViewBag.EditUnit.Item.ItemName</td>
+                <td>@ViewBag.EditUnit.Size.SizeName</td>
+                <td>@ViewBag.EditUnit.Item.Price</td>
+                <td>@ViewBag.EditUnit.Item.ItemCatagory.CatagoryName</td>
+                <form asp-action="SetUnitCount" asp-controller="Admin" method="POST">
+                    <input type="hidden" name="unitId" value="@ViewBag.EditUnit.UnitId">
+                    <td><input type="number" name="count" value="@ViewBag.EditUnit.Inventory"></td>
+                    <td><input type="submit" value="Update"></td>
+                </form>
+                <td>
+                    <form asp-action="DeleteInventory" asp-controller="Admin" method="POST">
+                        <input type="hidden" name="unitId" value="@ViewBag.EditUnit.UnitId">
+                        <input type="submit" value="Delete Inventory">
+                    </form>
+                </td>
+                
+            </tr>
+
+        </table>
+    </div>
+
+</div>

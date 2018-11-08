@@ -16,15 +16,17 @@
                     <th>Units</th>
                     <th>Price</th>
                     <th>Catagory</th>
+                    <th></th>
                 </tr>
                 @{
                     foreach(var unit in ViewBag.inventory){
                         <tr>
                             <td>@unit.Item.ItemName</td>
-                            <td>@unit.SizeId</td>
+                            <td>@unit.Size.SizeName</td>
                             <td>@unit.Inventory</td>
                             <td>@unit.Item.Price</td>
                             <td>@unit.Item.ItemCatagory.CatagoryName</td>
+                            <td><a href="UnitInventory/@unit.UnitId">Edit</a></td>
                         </tr>
                     }
                 }
@@ -39,16 +41,16 @@
         </div>
         <form asp-action="CreateInventory" asp-controller="Admin" method="POST">
             <div class="row">
-                <div class="col-6">
+                <div class="col-6 text-right">
                     <span asp-validation-for="Inventory"></span>
                     <label asp-for="Inventory">Initial Inventory of Units:</label>
                 </div>
                 <div class="col-6">
-                    <input asp-for="Inventory" type="number"> 
+                    <input asp-for="Inventory" type="number" value="0"> 
                 </div>   
             </div>
             <div class="row">
-                <div class="col-6">
+                <div class="col-6 text-right">
                     <span asp-validation-for="ItemId"></span>
                     <label asp-for="ItemId">Item:</label>
                 </div>
@@ -63,7 +65,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-6">
+                <div class="col-6 text-right">
                     <span asp-validation-for="SizeId"></span>
                     <label asp-for="SizeId">Size:</label>
                 </div>

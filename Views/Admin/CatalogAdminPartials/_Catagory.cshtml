@@ -28,10 +28,21 @@
             </div>
         </div>
         <form asp-action="CreateCatagory" asp-controller="Admin" method="POST">
+            <div class="row">
+                <div class="col-6 text-right">
                     <span asp-validation-for="CatagoryName"></span>
                     <label asp-for="CatagoryName">Catagory Name:</label>
+                </div>
+                <div class="col-6">
                     <input asp-for="CatagoryName">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6"></div>
+                <div class="col-6">
                     <input type="submit" value="Create New Catagory">
+                    </div>
+            </div>
         </form>
     </div>
 </div>

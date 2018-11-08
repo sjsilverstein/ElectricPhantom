@@ -88,6 +88,10 @@ namespace ElectricPhantom.Controllers
                     var Hasher = new PasswordHasher<User>();
                     if(0 != Hasher.VerifyHashedPassword(IsUser, IsUser.Password, userToCheck.Password)){
                         HttpContext.Session.SetInt32("UserId", (int)IsUser.UserId);
+
+                        if(IsUser.UserLevel == 9 ){
+                            return RedirectToAction("CatalogAdmin", "Admin");    
+                        }
                         return RedirectToAction("ListUsers", "Login");
                     }
                 }

@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="row">
+        <div class="col-11 text-center">
+            <h5>Item Style :: @ViewBag.EditItem.ItemName</h5>
+
+        </div>
+        <div class="col-1">
+            <a href="~/CatalogAdmin">Return (Catalog Admin)</a>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table">
+            <tr>
+                <th>Style Name</th>
+                <th>Catagory</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <form asp-action="UpdateItemStyle" asp-controller="Admin" method="POST">
+                    <input type="hidden" name="itemId" value="@ViewBag.EditItem.ItemId">
+                    <td><input name="itemName" value="@ViewBag.EditItem.ItemName"></td>
+                    <td>@ViewBag.EditItem.ItemCatagory.CatagoryName</td>
+                    <td><input name="price" value="@ViewBag.EditItem.Price"</td>
+                    <td><input name="description" value="@ViewBag.EditItem.Description"</td>
+                    <td><input type="submit" value="Update"></td>
+                </form>
+                
+                <td>
+                    <form asp-action="DeleteStyle" asp-controller="Admin" method="POST">
+                        <input type="hidden" name="itemId" value="@ViewBag.EditItem.ItemId">
+                        <input type="submit" value="Destory All Inventory">
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+

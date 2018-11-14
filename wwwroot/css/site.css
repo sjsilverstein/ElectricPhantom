@@ -26,11 +26,17 @@ p{
 a{
     font-family:  Sans-Serif;
 }
+.shop_itembox{
+    height: 200px;
+    width: 200px;
+    background-color: bisque;
+    margin: 10px 10px;
+}
 .dv{
     border: 2px dotted red;
 }
-.test{
-    background: rgba(0, 0, 0, 0.4);
+.transperent_black_blackround_rounded{
+    background: rgba(0, 0, 0, 0.5);
     border-radius: 20px;
 }
 .carousel-control-prev{

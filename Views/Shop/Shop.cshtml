@@ -1,18 +1,37 @@
-@{
-    string LocalString = ViewBag.Example + " Good to see you!";
-}
 
-<h2>@LocalString</h2>
-
-<p>Welcome to the shop.</p>
-
-<h1> @ViewBag.Example </h1>
-
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1>Welcome to the Shop</h1>
+        </div>
+        
+    </div>
+   @{
+       foreach(var cata in ViewBag.AllCata){
+           <div class="row">
+               <div class="col-12 text-center">
+                   <h4>@cata.CatagoryName</h4>
+               </div>
+            </div>
+            <div class="d-flex flex-wrap justify-content-center">
+                @foreach(var item in ViewBag.AllStyles){
+                    if(cata.CatagoryId == item.CatagoryId){
+                        <div class="shop_itembox text-center">
+                            <h4>@item.ItemName</h4>
+                            <p>($@item.Price)</p>
+                        </div>
+                    }
+                }
+            </div>
+       }
+   }
+</div>
 @{
                 DateTime CurrentTime = DateTime.Now;
                 //For more custom DateTime strings in C#
                 //https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings
                 <p>@CurrentTime.ToString("MMMM dd, yyyy g / h:m:s tt")</p>
             }
+
 
 

@@ -19,6 +19,25 @@ namespace ElectricPhantom.Controllers
         public AdminController(ElectricPhantomContext context){
             _context = context;
         }
+        //Method takes in an int and checks if the currently logged 
+        //in user has a user level => some int. If it does then
+        //we should continue with whatever we are doing. 
+        //If not we should set some controls as to what should happen.
+        public bool CheckLoggedUserLevel(int checkLoggedUserLevelIs){
+            // Check if the user is logged into the system if not return false.
+            int? uId = HttpContext.Session.GetInt32("UserId");
+            if(uId == null){
+                return false;
+            }
+            //Check if loggin in user is UserLevel < checkLevelIs
+            //If it is return false.
+            User loggedUser = _context.Users.SingleOrDefault(u => u.UserId == uId);            
+            if(loggedUser.UserLevel < checkLoggedUserLevelIs){
+                return false;
+            }
+
+            return true;
+        }
 
         //Delete User
         [HttpGet]

@@ -10,7 +10,7 @@
        foreach(var cata in ViewBag.AllCata){
            <div class="row">
                <div class="col-12 text-center">
-                   <h4>@cata.CatagoryName</h4>
+                   <h2>@cata.CatagoryName</h2>
                </div>
             </div>
             <div class="d-flex flex-wrap justify-content-center">
@@ -18,8 +18,13 @@
                     if(cata.CatagoryId == item.CatagoryId){
                         <div class="shop_itembox text-center">
                             <h4>@item.ItemName</h4>
+                            
+                            <div class="img_box">
+                                <img class="img-thumbnail img_moon_phase_thumbnail" src="~/images/shop/styles/@item.ImgName" alt="MoonPhase4">
+                            </div>
                             <p>($@item.Price)</p>
                         </div>
+                        
                     }
                 }
             </div>

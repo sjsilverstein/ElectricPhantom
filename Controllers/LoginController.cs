@@ -104,7 +104,7 @@ namespace ElectricPhantom.Controllers
         [Route("Logoff")]
         public IActionResult Logoff(){
             HttpContext.Session.Clear();
-            return RedirectToAction("Index", "Home"); 
+            return RedirectToAction("Login"); 
         }
 
         //List of all Users

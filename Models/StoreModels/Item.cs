@@ -16,6 +16,8 @@ namespace ElectricPhantom.Models
         
         public float Price{ get;set; }
 
+        public string ImgName {get;set;}
+
         public int CatagoryId { get; set; }
         public Catagory ItemCatagory { get; set; }
 

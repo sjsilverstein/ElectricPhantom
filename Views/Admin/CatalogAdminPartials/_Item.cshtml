@@ -9,7 +9,6 @@
         <table class="table">
             <tr>
                 <th>Style Name</th>
-                <th>Description</th>
                 <th>Price</th>
                 <th>Catagory</th>
                 <th></th>
@@ -18,7 +17,6 @@
                 foreach(var item in ViewBag.itemList){
                     <tr>
                         <td>@item.ItemName</td>
-                        <td>@item.Description</td>
                         <td>@item.Price</td>
                         <td>@item.ItemCatagory.CatagoryName</td>
                         <td><a href="Style/@item.ItemId">Edit</a></td>
@@ -33,7 +31,7 @@
                 <p>Create a new Style for the Catalog</p>
             </div>
         </div>
-        <form asp-action="CreateItem" asp-controller="Admin" method="POST">
+        <form asp-action="CreateItem" asp-controller="Admin" enctype="multipart/form-data" method="POST">
             <div class="row">
                 <div class="col-6 text-right">
                     <span asp-validation-for="ItemName"></span>
@@ -74,6 +72,15 @@
                 </div>
                 <div class="col-6">
                     <input asp-for="Description">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 text-right">
+                    <span asp-validation-for="MyImage"></span>
+                    <label asp-for="MyImage">Img File:</label>
+                </div>
+                <div class="col-6">
+                    <input asp-for="MyImage">
                 </div>
             </div>
             <div class="row">

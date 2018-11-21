@@ -1,11 +1,16 @@
 <div class="container">
     <div class="row">
         <div class="col-11 text-center">
-            <h5>Item Style :: @ViewBag.EditItem.ItemName</h5>
+            <h5>:: @ViewBag.EditItem.ItemName ::</h5>
 
         </div>
         <div class="col-1">
             <a href="~/CatalogAdmin">Return (Catalog Admin)</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <p><b>Description:</b> @ViewBag.EditItem.Description</p>
         </div>
     </div>
     <div class="row">
@@ -23,8 +28,8 @@
                     <input type="hidden" name="itemId" value="@ViewBag.EditItem.ItemId">
                     <td><input name="itemName" value="@ViewBag.EditItem.ItemName"></td>
                     <td>@ViewBag.EditItem.ItemCatagory.CatagoryName</td>
-                    <td><input name="price" value="@ViewBag.EditItem.Price"</td>
-                    <td><input name="description" value="@ViewBag.EditItem.Description"</td>
+                    <td><input name="price" value="@ViewBag.EditItem.Price"></td>
+                    <td><input name="description" value="@ViewBag.EditItem.Description"></td>
                     <td><input type="submit" value="Update"></td>
                 </form>
                 
@@ -37,5 +42,41 @@
             </tr>
         </table>
     </div>
+    <div class="row">
+        <div class="fullscale_img_box d-flex flex-wrap justify-content-center">
+            <img class="fullscale_gallery_img" src="~/images/shop/styles/@ViewBag.EditItem.ImgName">
+        </div>
+    </div>
+     <div class="row">
+        <table class="table">
+            <tr>
+                <th>Style Name</th>
+                <th>Size</th>
+                <th>Units Available</th>
+                <th></th>
+                <th></th>
+            </tr>
+            @{
+                    foreach(var unit in ViewBag.inventory){
+                        <tr>
+                            <td>@unit.Item.ItemName</td>
+                            <td>@unit.Size.SizeName</td>
+                            <td>@unit.Inventory</td>
+                            <form asp-action="SetUnitCount" asp-controller="Admin" method="POST">
+                                <input type="hidden" name="unitId" value="@unit.UnitId">
+                                <td><input type="number" name="count" value="@unit.Inventory"></td>
+                                <td><input type="submit" value="Update"></td>
+                            </form>
+                            <td>
+                                <form asp-action="DeleteInventory" asp-controller="Admin" method="POST">
+                                    <input type="hidden" name="unitId" value="@unit.UnitId">
+                                    <input type="submit" value="Delete Inventory">
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                }
+        </table>
+     </div>
 </div>
 

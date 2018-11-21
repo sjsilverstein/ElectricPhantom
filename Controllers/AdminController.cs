@@ -9,16 +9,22 @@ using ElectricPhantom.Context;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace ElectricPhantom.Controllers
 {
     public class AdminController : Controller
     {
+        private readonly IHostingEnvironment hostingEnvironment;
         //Connection to Database
         private ElectricPhantomContext _context;
-        public AdminController(ElectricPhantomContext context){
+        public AdminController(ElectricPhantomContext context, IHostingEnvironment environment){
             _context = context;
+            hostingEnvironment = environment;
         }
+
+        
         //Method takes in an int and checks if the currently logged 
         //in user has a user level => some int. If it does then
         //we should continue with whatever we are doing. 
@@ -44,15 +50,8 @@ namespace ElectricPhantom.Controllers
         [Route("Delete/{userId}")]
         public IActionResult Delete(int userId){
 
-            // Check if the user is logged into the system if not redirect them to the login page.
-            int? uId = HttpContext.Session.GetInt32("UserId");
-            if(uId == null){
-                return RedirectToAction("Index", "Login");
-            }
-            //Check if loggin in user is a SuperAdmin UserLevel == 9
-            //If not log them out.
-            User loggedUser = _context.Users.SingleOrDefault(u => u.UserId == uId);            
-            if(loggedUser.UserLevel != 9){
+            // Check if the user is logged into the system and userLevel == 9 if not log them off.
+            if(CheckLoggedUserLevel(9) != true){
                 return RedirectToAction("Logoff", "Login");
             }
 
@@ -68,15 +67,8 @@ namespace ElectricPhantom.Controllers
         [HttpGet]
         [Route("AdminEdit/{userId}")]
         public IActionResult AdminEdit(int userId){
-            // Check if the user is logged into the system if not redirect them to the login page.
-            int? uId = HttpContext.Session.GetInt32("UserId");
-            if(uId == null){
-                return RedirectToAction("Index", "Login");
-            }
-            //Check if loggin in user is a SuperAdmin UserLevel == 9
-            //If not log them out.
-            User loggedUser = _context.Users.SingleOrDefault(u => u.UserId == uId);            
-            if(loggedUser.UserLevel != 9){
+            // Check if the user is logged into the system and userLevel == 9 if not log them off.
+            if(CheckLoggedUserLevel(9) != true){
                 return RedirectToAction("Logoff", "Login");
             }
             
@@ -92,15 +84,8 @@ namespace ElectricPhantom.Controllers
         [HttpPost]
         [Route("AdminSetUserLevel")]
         public IActionResult AdminSetUserLevel(int userId, int newUserLevel){
-            // Check if the user is logged into the system if not redirect them to the login page.
-            int? uId = HttpContext.Session.GetInt32("UserId");
-            if(uId == null){
-                return RedirectToAction("Index", "Login");
-            }
-            //Check if loggin in user is a SuperAdmin UserLevel == 9
-            //If not log them out.
-            User loggedUser = _context.Users.SingleOrDefault(u => u.UserId == uId);            
-            if(loggedUser.UserLevel != 9){
+            // Check if the user is logged into the system and userLevel == 9 if not log them off.
+            if(CheckLoggedUserLevel(9) != true){
                 return RedirectToAction("Logoff", "Login");
             }
             
@@ -120,15 +105,8 @@ namespace ElectricPhantom.Controllers
         [HttpGet]
         [Route("CatalogAdmin")]
         public IActionResult CatalogAdmin(){
-             // Check if the user is logged into the system if not redirect them to the login page.
-            int? uId = HttpContext.Session.GetInt32("UserId");
-            if(uId == null){
-                return RedirectToAction("Index", "Login");
-            }
-            //Check if loggin in user is a SuperAdmin UserLevel == 9
-            //If not log them out.
-            User loggedUser = _context.Users.SingleOrDefault(u => u.UserId == uId);            
-            if(loggedUser.UserLevel != 9){
+             // Check if the user is logged into the system and userLevel == 9 if not log them off.
+            if(CheckLoggedUserLevel(9) != true){
                 return RedirectToAction("Logoff", "Login");
             }
 
@@ -180,39 +158,49 @@ namespace ElectricPhantom.Controllers
         [HttpPost]
         [Route("CreateItem")]
         public IActionResult CreateItem(ItemViewModel newItem){
+            
             if(ModelState.IsValid){
-
+                //Create a Unique FileName for imgUploaded with style and save imgFile
+                var uniqueFileName = GetUniqueFileName(newItem.MyImage.FileName);
+                var uploadTo = Path.Combine(hostingEnvironment.WebRootPath, "images/shop/styles");
+                var filePath = Path.Combine(uploadTo, uniqueFileName);
+                newItem.MyImage.CopyTo(new FileStream(filePath, FileMode.Create));
+                //Create new Item with ViewModel Data and the name of the unique file
                 Item addItem = new Item {
                     ItemName = newItem.ItemName,
                     Description = newItem.Description,
                     Price = newItem.Price,
+                    ImgName = uniqueFileName,
                     CatagoryId = newItem.CatagoryId
                 };
-
                 _context.Add(addItem);
                 _context.SaveChanges();
             }
             return RedirectToAction("CatalogAdmin", "Admin");
         }
+        //Creates a Guid to help insure only unique files are uploaded and saved to website.
+        private string GetUniqueFileName(string fileName)
+        {
+            fileName = Path.GetFileName(fileName);
+            return  Path.GetFileNameWithoutExtension(fileName)
+                    + "_" 
+                    + Guid.NewGuid().ToString().Substring(0, 4) 
+                    + Path.GetExtension(fileName);
+        }
         //Brings up an Item Style Page to Edit
         [HttpGet]
         [Route("Style/{itemId}")]
         public IActionResult Style(int itemId){
-            // Check if the user is logged into the system if not redirect them to the login page.
-            int? uId = HttpContext.Session.GetInt32("UserId");
-            if(uId == null){
-                return RedirectToAction("Index", "Login");
-            }
-            //Check if loggin in user is a SuperAdmin UserLevel == 9
-            //If not log them out.
-            User loggedUser = _context.Users.SingleOrDefault(u => u.UserId == uId);            
-            if(loggedUser.UserLevel != 9){
+            // Check if the user is logged into the system and userLevel == 9 if not log them off.
+            if(CheckLoggedUserLevel(9) != true){
                 return RedirectToAction("Logoff", "Login");
             }
 
             //Query for Selected Item Style
             Item editStyle = _context.Items.Include(i =>i.ItemCatagory).SingleOrDefault(i => i.ItemId == itemId);
+            List<Unit> styleInventory = _context.Units.Where(i => i.ItemId == editStyle.ItemId).Include(u => u.Size).Include(i => i.Item).ToList();
             ViewBag.EditItem = editStyle;
+            ViewBag.inventory = styleInventory;
 
             return View("ItemStyle");
         }
@@ -220,15 +208,8 @@ namespace ElectricPhantom.Controllers
         [HttpPost]
         [Route("UpdateItemStyle")]
         public IActionResult UpdateItemStyle(int itemId, string itemName, float price, string description){
-            // Check if the user is logged into the system if not redirect them to the login page.
-            int? uId = HttpContext.Session.GetInt32("UserId");
-            if(uId == null){
-                return RedirectToAction("Index", "Login");
-            }
-            //Check if loggin in user is a SuperAdmin UserLevel == 9
-            //If not log them out.
-            User loggedUser = _context.Users.SingleOrDefault(u => u.UserId == uId);            
-            if(loggedUser.UserLevel != 9){
+            // Check if the user is logged into the system and userLevel == 9 if not log them off.
+            if(CheckLoggedUserLevel(9) != true){
                 return RedirectToAction("Logoff", "Login");
             }
             //Query for Selected Unit
@@ -247,21 +228,18 @@ namespace ElectricPhantom.Controllers
         [HttpPost]
         [Route("DeleteStyle")]
         public IActionResult DeleteStyle(int itemId){
-
-            // Check if the user is logged into the system if not redirect them to the login page.
-            int? uId = HttpContext.Session.GetInt32("UserId");
-            if(uId == null){
-                return RedirectToAction("Index", "Login");
-            }
-            //Check if loggin in user is a SuperAdmin UserLevel == 9
-            //If not log them out.
-            User loggedUser = _context.Users.SingleOrDefault(u => u.UserId == uId);            
-            if(loggedUser.UserLevel != 9){
+            // Check if the user is logged into the system and userLevel == 9 if not log them off.
+            if(CheckLoggedUserLevel(9) != true){
                 return RedirectToAction("Logoff", "Login");
             }
-
             //Delete selected Style
             Item RetrievedItem = _context.Items.SingleOrDefault(i => i.ItemId == itemId);
+                    //Remove the Img file from wwwRoot
+                    string imgName = RetrievedItem.ImgName;
+                    var pathToImg = Path.Combine(hostingEnvironment.WebRootPath, "images/shop/styles");
+                    var filePath = Path.Combine(pathToImg, imgName);
+                    FileInfo myfileinf = new FileInfo(filePath);
+                    myfileinf.Delete();
             _context.Items.Remove(RetrievedItem);
             _context.SaveChanges();
 
@@ -271,6 +249,10 @@ namespace ElectricPhantom.Controllers
         [HttpPost]
         [Route("CreateInventory")]
         public IActionResult CreateInventory(InventoryViewModel newInventory){
+            // Check if the user is logged into the system and userLevel == 9 if not log them off.
+            if(CheckLoggedUserLevel(9) != true){
+                return RedirectToAction("Logoff", "Login");
+            }
             if(ModelState.IsValid){
 
                 Unit addUnits = new Unit {
@@ -289,15 +271,8 @@ namespace ElectricPhantom.Controllers
         [HttpGet]
         [Route("UnitInventory/{unitId}")]
         public IActionResult UnitInventory(int unitId){
-            // Check if the user is logged into the system if not redirect them to the login page.
-            int? uId = HttpContext.Session.GetInt32("UserId");
-            if(uId == null){
-                return RedirectToAction("Index", "Login");
-            }
-            //Check if loggin in user is a SuperAdmin UserLevel == 9
-            //If not log them out.
-            User loggedUser = _context.Users.SingleOrDefault(u => u.UserId == uId);            
-            if(loggedUser.UserLevel != 9){
+            // Check if the user is logged into the system and userLevel == 9 if not log them off.
+            if(CheckLoggedUserLevel(9) != true){
                 return RedirectToAction("Logoff", "Login");
             }
 
@@ -311,15 +286,8 @@ namespace ElectricPhantom.Controllers
         [HttpPost]
         [Route("SetUnitCount")]
         public IActionResult SetUnitCount(int unitId, int count){
-            // Check if the user is logged into the system if not redirect them to the login page.
-            int? uId = HttpContext.Session.GetInt32("UserId");
-            if(uId == null){
-                return RedirectToAction("Index", "Login");
-            }
-            //Check if loggin in user is a SuperAdmin UserLevel == 9
-            //If not log them out.
-            User loggedUser = _context.Users.SingleOrDefault(u => u.UserId == uId);            
-            if(loggedUser.UserLevel != 9){
+            // Check if the user is logged into the system and userLevel == 9 if not log them off.
+            if(CheckLoggedUserLevel(9) != true){
                 return RedirectToAction("Logoff", "Login");
             }
             //Query for Selected Unit
@@ -335,15 +303,8 @@ namespace ElectricPhantom.Controllers
         [Route("DeleteInventory")]
         public IActionResult DeleteInventory(int unitId){
 
-            // Check if the user is logged into the system if not redirect them to the login page.
-            int? uId = HttpContext.Session.GetInt32("UserId");
-            if(uId == null){
-                return RedirectToAction("Index", "Login");
-            }
-            //Check if loggin in user is a SuperAdmin UserLevel == 9
-            //If not log them out.
-            User loggedUser = _context.Users.SingleOrDefault(u => u.UserId == uId);            
-            if(loggedUser.UserLevel != 9){
+            // Check if the user is logged into the system and userLevel == 9 if not log them off.
+            if(CheckLoggedUserLevel(9) != true){
                 return RedirectToAction("Logoff", "Login");
             }
 

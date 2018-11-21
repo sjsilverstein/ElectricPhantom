@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
+
 
 namespace ElectricPhantom.Models {
     public class ItemViewModel {
@@ -11,6 +13,9 @@ namespace ElectricPhantom.Models {
         
         [Required]
         public float Price{ get;set; }
+
+        [Required]
+        public IFormFile MyImage { set; get; }
         
         [Required]
         public int CatagoryId { get; set; }

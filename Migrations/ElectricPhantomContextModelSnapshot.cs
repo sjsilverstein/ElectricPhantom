@@ -47,6 +47,8 @@ namespace ElectricPhantom.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<string>("ImgName");
+
                     b.Property<string>("ItemName");
 
                     b.Property<float>("Price");

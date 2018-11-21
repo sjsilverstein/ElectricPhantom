@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="row">
+    <div class="row margin_top_5">
         <div class="col-11 text-center">
             <h5>:: @ViewBag.EditItem.ItemName ::</h5>
 
@@ -7,6 +7,14 @@
         <div class="col-1">
             <a href="~/CatalogAdmin">Return (Catalog Admin)</a>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="img_box_h200 d-flex flex-wrap justify-content-center">
+                <img class="fullscale_gallery_img" src="~/images/shop/styles/@ViewBag.EditItem.ImgName">
+            </div>
+        </div>
+       
     </div>
     <div class="row">
         <div class="col-12">
@@ -41,42 +49,7 @@
                 </td>
             </tr>
         </table>
-    </div>
-    <div class="row">
-        <div class="fullscale_img_box d-flex flex-wrap justify-content-center">
-            <img class="fullscale_gallery_img" src="~/images/shop/styles/@ViewBag.EditItem.ImgName">
-        </div>
-    </div>
-     <div class="row">
-        <table class="table">
-            <tr>
-                <th>Style Name</th>
-                <th>Size</th>
-                <th>Units Available</th>
-                <th></th>
-                <th></th>
-            </tr>
-            @{
-                    foreach(var unit in ViewBag.inventory){
-                        <tr>
-                            <td>@unit.Item.ItemName</td>
-                            <td>@unit.Size.SizeName</td>
-                            <td>@unit.Inventory</td>
-                            <form asp-action="SetUnitCount" asp-controller="Admin" method="POST">
-                                <input type="hidden" name="unitId" value="@unit.UnitId">
-                                <td><input type="number" name="count" value="@unit.Inventory"></td>
-                                <td><input type="submit" value="Update"></td>
-                            </form>
-                            <td>
-                                <form asp-action="DeleteInventory" asp-controller="Admin" method="POST">
-                                    <input type="hidden" name="unitId" value="@unit.UnitId">
-                                    <input type="submit" value="Delete Inventory">
-                                </form>
-                            </td>
-                        </tr>
-                    }
-                }
-        </table>
-     </div>
+    </div>     
+         @Html.Partial("CatalogAdminPartials/_Inventory.cshtml")
 </div>
 

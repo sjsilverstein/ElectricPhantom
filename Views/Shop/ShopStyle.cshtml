@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1>@ViewBag.Style.ItemName</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8">
+            <div class="fullscale_img_box d-flex flex-wrap justify-content-center">
+                <img class="fullscale_gallery_img" src="~/images/shop/styles/@ViewBag.Style.ImgName" alt="test">
+            </div>        
+        </div>
+        <div class="col-4">
+<p>Description: @ViewBag.Style.Description</p>
+
+@{
+    foreach( var unit in ViewBag.StyleInventory){
+        <p>Size: @unit.Size.SizeName</p>
+        <p>Inventory Count: @unit.Inventory</p>
+    }
+    <p>Cost: @ViewBag.Style.Price</p>
+}
+        </div>
+    </div>
+    
+
+
+</div>

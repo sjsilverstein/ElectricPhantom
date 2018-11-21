@@ -201,6 +201,12 @@ namespace ElectricPhantom.Controllers
             List<Unit> styleInventory = _context.Units.Where(i => i.ItemId == editStyle.ItemId).Include(u => u.Size).Include(i => i.Item).ToList();
             ViewBag.EditItem = editStyle;
             ViewBag.inventory = styleInventory;
+            //Test
+            List<Item> styles = _context.Items.Where(i => i.ItemId == itemId).Include(i=>i.ItemCatagory).ToList();
+            ViewBag.itemList = styles;
+            //Query for All Sizes
+            List<Size> sizesAvailible = _context.Sizes.ToList();
+            ViewBag.sizes = sizesAvailible;
 
             return View("ItemStyle");
         }
@@ -254,6 +260,11 @@ namespace ElectricPhantom.Controllers
                 return RedirectToAction("Logoff", "Login");
             }
             if(ModelState.IsValid){
+                //Check if there is invetnory of that size and style.
+                Unit inventoryChecker = _context.Units.SingleOrDefault(u => u.SizeId == newInventory.SizeId && u.ItemId == newInventory.ItemId);
+                if(inventoryChecker != null){                    
+                    return RedirectToAction("CatalogAdmin", "Admin");
+                }
 
                 Unit addUnits = new Unit {
                     Inventory = newInventory.Inventory,
@@ -265,7 +276,7 @@ namespace ElectricPhantom.Controllers
                 _context.SaveChanges();
 
             }
-            return RedirectToAction("CatalogAdmin", "Admin");
+            return RedirectToAction("Style", new {itemId=newInventory.ItemId});
         }
         //Brings up Unit Inventory Page
         [HttpGet]
@@ -310,10 +321,11 @@ namespace ElectricPhantom.Controllers
 
             //Delete selected User
             Unit RetrievedUnit = _context.Units.SingleOrDefault(u => u.UnitId == unitId);
+            int? styleId = RetrievedUnit.ItemId;
             _context.Units.Remove(RetrievedUnit);
             _context.SaveChanges();
 
-            return RedirectToAction("CatalogAdmin", "Admin");
+            return RedirectToAction("Style", new {itemId=styleId});
         }
 
     }

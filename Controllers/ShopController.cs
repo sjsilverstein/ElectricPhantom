@@ -25,18 +25,22 @@ namespace ElectricPhantom.Controllers
         [Route("Shop")]
         public IActionResult Shop(){
             //All Item Styles
-            List<Item> allStyles = _context.Items.OrderBy(i => i.CatagoryId).ToList();
+            List<Item> allStyles = _context.Items.OrderBy(i => i.ItemName).ToList();
             ViewBag.AllStyles = allStyles;
             //All Catagories
-            List<Catagory> allCata = _context.Catagories.ToList();
+            List<Catagory> allCata = _context.Catagories.OrderBy(c => c.CatagoryName).ToList();
             ViewBag.AllCata = allCata;
             return View("Shop");
         }
         // Management Page for the shop. Only allow users with user level == 9 to access.
         [HttpGet]
-        [Route("Shop/Manage")]
-        public IActionResult ManageShop(){
-            return View("ManageShop");
+        [Route("Shop/Style/{itemId}")]
+        public IActionResult ShopStyle(int itemId){
+            Item getItem = _context.Items.SingleOrDefault(i => i.ItemId == itemId);
+            ViewBag.Style = getItem;
+            List<Unit> getStyleInventoryByItemId = _context.Units.Where(u => u.ItemId == itemId).Include(u => u.Size).Include(u => u.Item).ToList();
+            ViewBag.StyleInventory = getStyleInventoryByItemId;
+            return View("ShopStyle");
         }
 
     }

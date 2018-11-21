@@ -23,8 +23,10 @@ $(document).ready(function(){
         $('#fullscalegalleryimg').show();
         var srcImg = $(this).attr("src");
         var imgName = $(this).attr("alt");
+        var imgDesc = $(this).attr("data-desc");
         $('#fullscalegalleryimg img').attr("src", srcImg);
         $('#fullscalegalleryimg h1').html(imgName);
+        $('#fullscalegalleryimg p').html(imgDesc);
         console.log(srcImg);
       });
     //Moon Galllery on Hover add border styling

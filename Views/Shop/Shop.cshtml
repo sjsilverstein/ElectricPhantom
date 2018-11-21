@@ -1,14 +1,8 @@
 
 <div class="container">
-    <div class="row">
-        <div class="col-12 text-center">
-            <h1>Welcome to the Shop</h1>
-        </div>
-        
-    </div>
    @{
        foreach(var cata in ViewBag.AllCata){
-           <div class="row">
+           <div id="@cata.CatagoryName" class="row">
                <div class="col-12 text-center">
                    <h2>@cata.CatagoryName</h2>
                </div>
@@ -17,12 +11,14 @@
                 @foreach(var item in ViewBag.AllStyles){
                     if(cata.CatagoryId == item.CatagoryId){
                         <div class="shop_itembox text-center">
-                            <h4>@item.ItemName</h4>
                             
-                            <div class="img_box">
-                                <img class="img-thumbnail img_moon_phase_thumbnail" src="~/images/shop/styles/@item.ImgName" alt="MoonPhase4">
-                            </div>
-                            <p>($@item.Price)</p>
+                            <h4>@item.ItemName</h4>
+                            <a href="~/Shop/Style/@item.ItemId">
+                                <div class="img_box">
+                                    <img class="img-thumbnail img_moon_phase_thumbnail" src="~/images/shop/styles/@item.ImgName" alt="MoonPhase4">
+                                </div>
+                                <p>($@item.Price)</p>
+                            </a>
                         </div>
                         
                     }
@@ -31,12 +27,7 @@
        }
    }
 </div>
-@{
-                DateTime CurrentTime = DateTime.Now;
-                //For more custom DateTime strings in C#
-                //https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings
-                <p>@CurrentTime.ToString("MMMM dd, yyyy g / h:m:s tt")</p>
-            }
+
 
 
 

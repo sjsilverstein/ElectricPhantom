@@ -73,6 +73,12 @@ a{
 .fullscale_img_box{
     height: 80vh;
 }
+.img_box_h_vh50{
+    height: 50vh;
+}
+.img_box_h200{
+    height: 200px;
+}
 .moon_border{
     border: 4px solid gray;
 }

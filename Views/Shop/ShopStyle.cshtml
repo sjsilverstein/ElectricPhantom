@@ -1,3 +1,4 @@
+@model ElectricPhantom.Models.AddToCartViewModel
 <div class="container">
     <div class="row">
         <div class="col-12 text-center">
@@ -5,21 +6,29 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-8">
+        <div class="col-8 dv">
             <div class="fullscale_img_box d-flex flex-wrap justify-content-center">
                 <img class="fullscale_gallery_img" src="~/images/shop/styles/@ViewBag.Style.ImgName" alt="test">
             </div>        
         </div>
-        <div class="col-4">
-<p>Description: @ViewBag.Style.Description</p>
+        <div class="col-4 dv">
 
-@{
-    foreach( var unit in ViewBag.StyleInventory){
-        <p>Size: @unit.Size.SizeName</p>
-        <p>Inventory Count: @unit.Inventory</p>
+    <p>Description: @ViewBag.Style.Description</p>
+    <form asp-action="AddToCart" asp-controller="Shop" method="POST">
+        <input type="hidden" value="@ViewBag.Style.ItemId" asp-for="ItemId">
+        <p>Cost: $@ViewBag.Style.Price</p>
+        <p>Size</p>
+    @{
+        foreach( var unit in ViewBag.StyleInventory){
+            if(@unit.Inventory > 0){
+                <input type="radio" asp-for="SizeId" value="@unit.Size.SizeId"> @unit.Size.SizeName<br>
+            }
+        }
+        
     }
-    <p>Cost: @ViewBag.Style.Price</p>
-}
+     <input type="submit" value="Add to Cart">
+    </form>
+
         </div>
     </div>
     

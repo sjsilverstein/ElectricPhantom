@@ -36,11 +36,17 @@ namespace ElectricPhantom.Controllers
         [HttpGet]
         [Route("Shop/Style/{itemId}")]
         public IActionResult ShopStyle(int itemId){
-            Item getItem = _context.Items.SingleOrDefault(i => i.ItemId == itemId);
+            Item getItem = _context.Items.Include(i => i.ItemCatagory).SingleOrDefault(i => i.ItemId == itemId);
             ViewBag.Style = getItem;
             List<Unit> getStyleInventoryByItemId = _context.Units.Where(u => u.ItemId == itemId).Include(u => u.Size).Include(u => u.Item).ToList();
             ViewBag.StyleInventory = getStyleInventoryByItemId;
             return View("ShopStyle");
+        }
+        //Add Unit to Cart in Session
+        [HttpPost]
+        public IActionResult AddToCart(AddToCartViewModel itemToAdd){
+            Console.WriteLine("***XOXOXOXOXOXOXOXOXOXOXOXOXOOXOXOXOXOXOXOXOXOXOXOXOXOXOXO Made it to Add to Cart ****");
+            return RedirectToAction("ShopStyle", new {itemId=itemToAdd.ItemId});
         }
 
     }

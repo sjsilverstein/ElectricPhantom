@@ -16,13 +16,10 @@ img{
 body{
     font-family: Serif;
 }
-/*
 .text-gothic{
     font-family: gothicFont;
 }
-p{
-    font-family: Sans-Serif;
-}*/
+
 a{
     font-family:  Sans-Serif;
 }
@@ -52,6 +49,7 @@ a{
     height: 100vh;
     width: 100vw;
    background: url(../images/background_main.jpg) no-repeat center;
+   background-size: cover;
    background-color: rgba(0, 0, 0, 0.4);
    
 }
